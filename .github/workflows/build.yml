@@ -35,6 +35,9 @@ jobs:
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
 
+      - name: Create assets directory
+        run: mkdir -p android/app/src/main/assets
+
       - name: Sync Capacitor
         run: pnpm exec cap sync android
 
