@@ -1,17 +1,13 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
-// https://capacitorjs.com/docs/config
 const config: CapacitorConfig = {
-    appId: 'com.example.app',
-    appName: 'Example App',
-    webDir: 'dist',
-
-    // ios: {
-    //     iconAssets: []
-    // },
-    // pwa: {
-    //     iconPath: null
-    // }
+  appId: 'com.manhwagerx.app',
+  appName: 'Manhwa Gerx',
+  webDir: 'dist',
+  server: {
+    url: 'https://azerhamid59-lgtm.github.io/manhwa_gerx/',
+    cleartext: false
+  }
 };
 
 export default config;
