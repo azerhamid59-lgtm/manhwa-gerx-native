@@ -32,6 +32,11 @@ jobs:
       - name: Add Android platform
         run: pnpm exec cap add android
 
+      - name: Set App Version
+        run: |
+         sed -i 's/versionCode 1/versionCode 3/g' android/app/build.gradle
+         sed -i 's/versionName "1.0"/versionName "1.0.3"/g' android/app/build.gradle
+
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
 
