@@ -7,6 +7,14 @@ const config: CapacitorConfig = {
   server: {
     url: 'https://azerhamid59-lgtm.github.io/manhwa_gerx/',
     cleartext: false
+  },
+  plugins: {
+    EdgeToEdge: {
+      backgroundColor: "#000000"
+    },
+    SystemBars: {
+      insetsHandling: "disable"
+    }
   }
 };
 
