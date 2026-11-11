@@ -6,6 +6,9 @@
   "scripts": {
     "build": "echo no build step"
   },
+  "dependencies": {
+  "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.0"
+},
   "devDependencies": {
     "@capacitor/android": "^8.5.3",
     "@capacitor/assets": "^3.0.5",
