@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Manhwa Gerx',
   webDir: 'dist',
   server: {
-    url: 'https://azerhamid59-lgtm.github.io/manhwa_gerx/',
+    url: 'https://azerhamid59-lgtm.github.io/manhwa_gerx/?v=2',
     cleartext: false
   },
   plugins: {
