@@ -70,7 +70,7 @@ jobs:
 
       - name: Remove Native Scrollbar from Theme
         run: |
-         sed -i 's#<style name="AppTheme.NoActionBarLaunch">#<style name="AppTheme.NoActionBarLaunch">\n        <item name="android:scrollbars">none</item>\n        <item name="android:scrollbarSize">0dp</item>#' android/app/src/main/res/values/styles.xml
+         sed -i '/<style name="AppTheme.NoActionBarLaunch"/a\        <item name="android:scrollbars">none</item>\n        <item name="android:scrollbarSize">0dp</item>' android/app/src/main/res/values/styles.xml
 
       - name: Create assets directory
         run: mkdir -p android/app/src/main/assets
