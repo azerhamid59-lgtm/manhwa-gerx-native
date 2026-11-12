@@ -44,8 +44,8 @@ jobs:
 
       - name: Set App Version
         run: |
-          sed -i 's/versionCode 1/versionCode 3/g' android/app/build.gradle
-          sed -i 's/versionName "1.0"/versionName "1.0.3"/g' android/app/build.gradle
+          sed -i 's/versionCode 1/versionCode 4/g' android/app/build.gradle
+          sed -i 's/versionName "1.0"/versionName "1.2.2"/g' android/app/build.gradle
 
       - name: Create Assets Directory
         run: mkdir -p android/app/src/main/assets
@@ -66,18 +66,34 @@ jobs:
                   super.onCreate(savedInstanceState)
                   this.bridge.webView.setVerticalScrollBarEnabled(false)
                   this.bridge.webView.setHorizontalScrollBarEnabled(false)
+                  
+                  this.bridge.webView.postDelayed({
+                      this.bridge.webView.evaluateJavascript(
+                          "var style = document.createElement('style'); style.innerHTML = '::-webkit-scrollbar { display: none !important; width: 0px !important; height: 0px !important; background: transparent !important; } * { scrollbar-width: none !important; -ms-overflow-style: none !important; }'; document.head.appendChild(style);",
+                          null
+                      )
+                  }, 1000)
               }
           }
           EOF
 
-      - name: Remove Native Scrollbar from Theme (styles.xml)
+      - name: Set System Bars and Remove Scrollbar (Theme)
         run: |
-          sed -i '/<style name="AppTheme.NoActionBarLaunch"/a\        <item name="android:scrollbars">none</item>\n        <item name="android:scrollbarSize">0dp</item>' android/app/src/main/res/values/styles.xml
-
-      - name: Set System Bars Color
-        run: |
-          sed -i 's/<item name="android:statusBarColor">.*<\/item>/<item name="android:statusBarColor">#000000<\/item>/g' android/app/src/main/res/values/styles.xml
-          sed -i 's/<item name="android:navigationBarColor">.*<\/item>/<item name="android:navigationBarColor">#000000<\/item>/g' android/app/src/main/res/values/styles.xml
+          cat << 'EOF' > android/app/src/main/res/values/styles.xml
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
+                  <item name="android:background">@drawable/splash</item>
+              </style>
+              <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+                  <item name="android:windowBackground">@null</item>
+                  <item name="android:scrollbars">none</item>
+                  <item name="android:scrollbarSize">0dp</item>
+                  <item name="android:statusBarColor">#000000</item>
+                  <item name="android:navigationBarColor">#000000</item>
+              </style>
+          </resources>
+          EOF
 
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
