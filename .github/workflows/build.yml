@@ -47,7 +47,10 @@ jobs:
           sed -i 's/versionCode 1/versionCode 3/g' android/app/build.gradle
           sed -i 's/versionName "1.0"/versionName "1.0.3"/g' android/app/build.gradle
 
-      - name: Hide Native Scrollbar
+      - name: Sync Capacitor
+        run: pnpm exec cap sync android
+
+      - name: Hide Native Scrollbar (MainActivity)
         run: |
           cat << 'EOF' > android/app/src/main/java/com/manhwagerx/app/MainActivity.kt
           package com.manhwagerx.app
@@ -58,28 +61,26 @@ jobs:
           class MainActivity : BridgeActivity() {
               override fun onCreate(savedInstanceState: Bundle?) {
                   super.onCreate(savedInstanceState)
-                  bridge.webView.isVerticalScrollBarEnabled = false
+                  this.bridge.webView.setVerticalScrollBarEnabled(false)
+                  this.bridge.webView.setHorizontalScrollBarEnabled(false)
               }
           }
           EOF
+
+      - name: Remove Native Scrollbar from Theme (styles.xml)
+        run: |
+          sed -i '/<style name="AppTheme.NoActionBarLaunch"/a\        <item name="android:scrollbars">none</item>\n        <item name="android:scrollbarSize">0dp</item>' android/app/src/main/res/values/styles.xml
 
       - name: Set System Bars Color
         run: |
           sed -i 's/<item name="android:statusBarColor">.*<\/item>/<item name="android:statusBarColor">#000000<\/item>/g' android/app/src/main/res/values/styles.xml
           sed -i 's/<item name="android:navigationBarColor">.*<\/item>/<item name="android:navigationBarColor">#000000<\/item>/g' android/app/src/main/res/values/styles.xml
 
-      - name: Remove Native Scrollbar from Theme
-        run: |
-         sed -i '/<style name="AppTheme.NoActionBarLaunch"/a\        <item name="android:scrollbars">none</item>\n        <item name="android:scrollbarSize">0dp</item>' android/app/src/main/res/values/styles.xml
-
       - name: Create assets directory
         run: mkdir -p android/app/src/main/assets
 
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
-
-      - name: Sync Capacitor
-        run: pnpm exec cap sync android
 
       - name: Build Android app
         run: cd android && ./gradlew assembleDebug
@@ -88,7 +89,7 @@ jobs:
         run: ls -lh android/app/build/outputs/apk/debug/
 
       - name: Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             ./android/app/build/outputs/apk/debug/app-debug.apk
