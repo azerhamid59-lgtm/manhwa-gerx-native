@@ -68,6 +68,10 @@ jobs:
           sed -i 's/<item name="android:statusBarColor">.*<\/item>/<item name="android:statusBarColor">#000000<\/item>/g' android/app/src/main/res/values/styles.xml
           sed -i 's/<item name="android:navigationBarColor">.*<\/item>/<item name="android:navigationBarColor">#000000<\/item>/g' android/app/src/main/res/values/styles.xml
 
+      - name: Remove Native Scrollbar from Theme
+        run: |
+         sed -i 's#<style name="AppTheme.NoActionBarLaunch">#<style name="AppTheme.NoActionBarLaunch">\n        <item name="android:scrollbars">none</item>\n        <item name="android:scrollbarSize">0dp</item>#' android/app/src/main/res/values/styles.xml
+
       - name: Create assets directory
         run: mkdir -p android/app/src/main/assets
 
