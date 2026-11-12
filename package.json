@@ -9,6 +9,7 @@
   "dependencies": {
     "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0"
+    "@capacitor-community/navigation-bar": "^6.0.0",
   },
   "devDependencies": {
     "@capacitor/android": "^8.5.3",
