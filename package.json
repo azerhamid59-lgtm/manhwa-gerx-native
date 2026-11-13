@@ -1,23 +1,23 @@
 {
-  "name": "app-name",
+  "name": "manhwa-gerx-native",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.3.0",
   "type": "module",
   "scripts": {
     "build": "echo no build step"
   },
   "dependencies": {
-    "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.0",
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
+    "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.0",
     "@capawesome/capacitor-navigation-bar": "^8.0.0",
-    "@codetrix-studio/capacitor-google-auth": "^3.4.3"
+    "@capgo/capacitor-social-login": "^8.0.0"
   },
   "devDependencies": {
-    "@capacitor/android": "^8.5.3",
     "@capacitor/assets": "^3.0.5",
-    "@capacitor/cli": "^8.5.3",
-    "@capacitor/core": "^8.5.3",
-    "typescript": "^7.0.2",
-    "vite": "^8.3.4"
+    "@capacitor/cli": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
   }
 }
