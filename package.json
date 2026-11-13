@@ -9,8 +9,8 @@
   "dependencies": {
     "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
-    "@capawesome/capacitor-navigation-bar": "^8.0.0"
-    "@codetrix-studio/capacitor-google-auth": "^3.4.3",
+    "@capawesome/capacitor-navigation-bar": "^8.0.0",
+    "@codetrix-studio/capacitor-google-auth": "^3.4.3"
   },
   "devDependencies": {
     "@capacitor/android": "^8.5.3",
