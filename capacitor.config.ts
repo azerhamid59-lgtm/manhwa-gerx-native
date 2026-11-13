@@ -14,6 +14,11 @@ const config: CapacitorConfig = {
     },
     SystemBars: {
       insetsHandling: "disable"
+    },
+    SocialLogin: {
+      providers: {
+        google: true
+      }
     }
   }
 };
