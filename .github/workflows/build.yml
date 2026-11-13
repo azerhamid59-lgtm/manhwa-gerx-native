@@ -138,8 +138,7 @@ jobs:
         run: cd android && ./gradlew assembleDebug
 
       - name: Get SHA-1 Fingerprint
-        run: |
-          keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | grep SHA1
+        run: cd android && ./gradlew signingReport | grep -A 5 "Variant: debug" | grep "SHA1"
 
       - name: Verify APK file
         run: ls -lh android/app/build/outputs/apk/debug/
