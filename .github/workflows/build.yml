@@ -125,11 +125,15 @@ jobs:
               </style>
               
               <!-- ثيم شاشة البداية -->
-              <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
+              <style name="AppTheme.NoActionBarLaunch" parent="Theme.AppCompat.DayNight.NoActionBar">
                   <item name="android:background">@drawable/splash</item>
               </style>
           </resources>
           EOF
+
+      - name: Disable Credential Manager
+        run: |
+          sed -i 's|</application>|    <meta-data android:name="com.google.android.gms.credentials.API_ENABLED" android:value="false" />\n    <meta-data android:name="androidx.credentials.CREDENTIAL_SERVICE_ENABLED" android:value="false" />\n</application>|' android/app/src/main/AndroidManifest.xml
 
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
