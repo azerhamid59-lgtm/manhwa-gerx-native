@@ -44,14 +44,22 @@ jobs:
 
       - name: Set App Version
         run: |
-          sed -i 's/versionCode 1/versionCode 6/g' android/app/build.gradle
-          sed -i 's/versionName "1.0"/versionName "1.5.0"/g' android/app/build.gradle
+          sed -i 's/versionCode 1/versionCode 7/g' android/app/build.gradle
+          sed -i 's/versionName "1.0"/versionName "1.6.0"/g' android/app/build.gradle
 
       - name: Create Assets Directory
         run: mkdir -p android/app/src/main/assets
 
       - name: Sync Capacitor
         run: pnpm exec cap sync android
+
+      - name: Copy google-services.json
+        run: cp google-services.json android/app/google-services.json
+
+      - name: Apply Google Services Plugin
+        run: |
+          sed -i "s|classpath 'com.android.tools.build:gradle|classpath 'com.google.gms:google-services:4.4.2'\n        classpath 'com.android.tools.build:gradle|" android/build.gradle
+          sed -i "s|apply plugin: 'com.android.application'|apply plugin: 'com.android.application'\napply plugin: 'com.google.gms.google-services'|" android/app/build.gradle
 
       - name: Hide Native Scrollbar and Add SocialLogin (MainActivity)
         run: |
@@ -128,10 +136,10 @@ jobs:
           </resources>
           EOF
 
-      - name: Disable Credential Manager and Force Legacy Auth
+      - name: Disable Credential Manager
         run: |
           MANIFEST_PATH="android/app/src/main/AndroidManifest.xml"
-          sed -i 's|</application>|    <meta-data android:name="com.google.android.gms.credentials.API_ENABLED" android:value="false" />\n    <meta-data android:name="com.google.android.gms.credentials.CredentialPickerConfig" android:value="false" />\n    <meta-data android:name="androidx.credentials.CREDENTIAL_SERVICE_ENABLED" android:value="false" />\n</application>|' $MANIFEST_PATH
+          sed -i 's|</application>|    <meta-data android:name="com.google.android.gms.credentials.API_ENABLED" android:value="false" />\n    <meta-data android:name="androidx.credentials.CREDENTIAL_SERVICE_ENABLED" android:value="false" />\n</application>|' $MANIFEST_PATH
 
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
