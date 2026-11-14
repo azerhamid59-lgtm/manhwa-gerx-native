@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "738156491333",
+    "project_id": "manhwa-gerx-cc742",
+    "storage_bucket": "manhwa-gerx-cc742.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738156491333:android:24fd71bd108c0ecbb9a92c",
+        "android_client_info": {
+          "package_name": "com.manhwagerx.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC79eSkNardHwSQsNiytvksyHKq7nGVn0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
