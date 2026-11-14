@@ -161,13 +161,13 @@ jobs:
               }
           }
           EOF
+
+      - name: Build Android app
+        run: cd android && ./gradlew assembleDebug
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Build Android app
-        run: cd android && ./gradlew assembleDebug
 
       - name: Verify APK file
         run: ls -lh android/app/build/outputs/apk/debug/
