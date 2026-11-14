@@ -1,7 +1,7 @@
 {
   "name": "manhwa-gerx-native",
   "private": true,
-  "version": "1.7.2",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build": "echo no build step"
