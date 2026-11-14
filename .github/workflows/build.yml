@@ -44,8 +44,8 @@ jobs:
 
       - name: Set App Version
         run: |
-          sed -i 's/versionCode 1/versionCode 5/g' android/app/build.gradle
-          sed -i 's/versionName "1.0"/versionName "1.3.0"/g' android/app/build.gradle
+          sed -i 's/versionCode 1/versionCode 6/g' android/app/build.gradle
+          sed -i 's/versionName "1.0"/versionName "1.5.0"/g' android/app/build.gradle
 
       - name: Create Assets Directory
         run: mkdir -p android/app/src/main/assets
@@ -108,14 +108,12 @@ jobs:
           cat << 'EOF' > android/app/src/main/res/values/styles.xml
           <?xml version="1.0" encoding="utf-8"?>
           <resources>
-              <!-- الثيم الأساسي المفقود -->
               <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
                   <item name="android:windowBackground">@null</item>
                   <item name="android:statusBarColor">#000000</item>
                   <item name="android:navigationBarColor">#000000</item>
               </style>
               
-              <!-- الثيم المستخدم في التطبيق -->
               <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
                   <item name="android:windowBackground">@null</item>
                   <item name="android:scrollbars">none</item>
@@ -124,16 +122,16 @@ jobs:
                   <item name="android:navigationBarColor">#000000</item>
               </style>
               
-              <!-- ثيم شاشة البداية -->
               <style name="AppTheme.NoActionBarLaunch" parent="Theme.AppCompat.DayNight.NoActionBar">
                   <item name="android:background">@drawable/splash</item>
               </style>
           </resources>
           EOF
 
-      - name: Disable Credential Manager
+      - name: Disable Credential Manager and Force Legacy Auth
         run: |
-          sed -i 's|</application>|    <meta-data android:name="com.google.android.gms.credentials.API_ENABLED" android:value="false" />\n    <meta-data android:name="androidx.credentials.CREDENTIAL_SERVICE_ENABLED" android:value="false" />\n</application>|' android/app/src/main/AndroidManifest.xml
+          MANIFEST_PATH="android/app/src/main/AndroidManifest.xml"
+          sed -i 's|</application>|    <meta-data android:name="com.google.android.gms.credentials.API_ENABLED" android:value="false" />\n    <meta-data android:name="com.google.android.gms.credentials.CredentialPickerConfig" android:value="false" />\n    <meta-data android:name="androidx.credentials.CREDENTIAL_SERVICE_ENABLED" android:value="false" />\n</application>|' $MANIFEST_PATH
 
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
@@ -149,9 +147,9 @@ jobs:
               signingConfigs {
                   debug {
                       storeFile file("release.keystore")
-                      storePassword System.getenv("KEYSTORE_PASSWORD")
-                      keyAlias System.getenv("KEY_ALIAS")
-                      keyPassword System.getenv("KEY_PASSWORD")
+                      storePassword "${{ secrets.KEYSTORE_PASSWORD }}"
+                      keyAlias "${{ secrets.KEY_ALIAS }}"
+                      keyPassword "${{ secrets.KEY_PASSWORD }}"
                   }
               }
               buildTypes {
@@ -164,10 +162,6 @@ jobs:
 
       - name: Build Android app
         run: cd android && ./gradlew assembleDebug
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Verify APK file
         run: ls -lh android/app/build/outputs/apk/debug/
