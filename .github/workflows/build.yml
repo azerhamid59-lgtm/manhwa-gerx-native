@@ -44,8 +44,8 @@ jobs:
 
       - name: Set App Version
         run: |
-          sed -i 's/versionCode 1/versionCode 4/g' android/app/build.gradle
-          sed -i 's/versionName "1.0"/versionName "1.2.3"/g' android/app/build.gradle
+          sed -i 's/versionCode 1/versionCode 5/g' android/app/build.gradle
+          sed -i 's/versionName "1.0"/versionName "1.3.0"/g' android/app/build.gradle
 
       - name: Create Assets Directory
         run: mkdir -p android/app/src/main/assets
@@ -137,6 +137,34 @@ jobs:
 
       - name: Generate Icons
         run: pnpm exec capacitor-assets generate --iconBackgroundColor "#FFFFFF"
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/release.keystore
+
+      - name: Configure Signing
+        run: |
+          cat << 'EOF' >> android/app/build.gradle
+          android {
+              signingConfigs {
+                  debug {
+                      storeFile file("release.keystore")
+                      storePassword System.getenv("KEYSTORE_PASSWORD")
+                      keyAlias System.getenv("KEY_ALIAS")
+                      keyPassword System.getenv("KEY_PASSWORD")
+                  }
+              }
+              buildTypes {
+                  debug {
+                      signingConfig signingConfigs.debug
+                  }
+              }
+          }
+          EOF
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Build Android app
         run: cd android && ./gradlew assembleDebug
