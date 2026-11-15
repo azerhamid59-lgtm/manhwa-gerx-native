@@ -34,18 +34,25 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Install Capacitor
-        run: pnpm add -w @capacitor/core @capacitor/cli @capacitor/android @capacitor/assets
+        run: pnpm add -w @capacitor/core @capacitor/cli @capacitor/android @capacitor/assets @capacitor/app
 
       - name: Build app
         run: pnpm run build
+
+      - name: Fetch Local Web Files (Offline Support)
+        run: |
+          mkdir -p dist
+          wget https://azerhamid59-lgtm.github.io/manhwa_gerx/index.html -O dist/index.html
+          wget https://azerhamid59-lgtm.github.io/manhwa_gerx/icon.png -O dist/icon.png
+          wget https://azerhamid59-lgtm.github.io/manhwa_gerx/manifest.json -O dist/manifest.json
 
       - name: Add Android platform
         run: pnpm exec cap add android
 
       - name: Set App Version
         run: |
-          sed -i 's/versionCode 1/versionCode 8/g' android/app/build.gradle
-          sed -i 's/versionName "1.0"/versionName "1.7.2"/g' android/app/build.gradle
+          sed -i 's/versionCode 1/versionCode 9/g' android/app/build.gradle
+          sed -i 's/versionName "1.0"/versionName "1.8.0"/g' android/app/build.gradle
 
       - name: Create Assets Directory
         run: mkdir -p android/app/src/main/assets
@@ -121,7 +128,6 @@ jobs:
                   <item name="android:statusBarColor">#000000</item>
                   <item name="android:navigationBarColor">#000000</item>
               </style>
-              
               <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
                   <item name="android:windowBackground">@null</item>
                   <item name="android:scrollbars">none</item>
@@ -129,8 +135,7 @@ jobs:
                   <item name="android:statusBarColor">#000000</item>
                   <item name="android:navigationBarColor">#000000</item>
               </style>
-              
-              <style name="AppTheme.NoActionBarLaunch" parent="Theme.AppCompat.DayNight.NoActionBar">
+              <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
                   <item name="android:background">@drawable/splash</item>
               </style>
           </resources>
