@@ -1,13 +1,14 @@
 {
   "name": "manhwa-gerx-native",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.8.0",
   "type": "module",
   "scripts": {
     "build": "echo no build step"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
+    "@capacitor/app": "^8.0.0",
     "@capacitor/core": "^8.0.0",
     "@capacitor/filesystem": "^8.0.0",
     "@capacitor/status-bar": "^8.0.0",
