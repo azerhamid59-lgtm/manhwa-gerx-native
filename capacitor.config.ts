@@ -3,11 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.manhwagerx.app',
   appName: 'Manhwa Gerx',
-  webDir: 'dist',
-  server: {
-    url: 'https://azerhamid59-lgtm.github.io/manhwa_gerx/?v=2',
-    cleartext: false
-  },
+  webDir: 'dist', // سيقرأ الملفات من مجلد dist المحلي
   plugins: {
     EdgeToEdge: {
       backgroundColor: "#000000"
