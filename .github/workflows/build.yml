@@ -39,12 +39,16 @@ jobs:
       - name: Build app
         run: pnpm run build
 
+      # --- 🚨 هنا كان الخطأ، لقد أضفنا styles.css و app.js ---
       - name: Fetch Local Web Files (Offline Support)
         run: |
           mkdir -p dist
           wget https://azerhamid59-lgtm.github.io/manhwa_gerx/index.html -O dist/index.html
+          wget https://azerhamid59-lgtm.github.io/manhwa_gerx/styles.css -O dist/styles.css
+          wget https://azerhamid59-lgtm.github.io/manhwa_gerx/app.js -O dist/app.js
           wget https://azerhamid59-lgtm.github.io/manhwa_gerx/icon.png -O dist/icon.png
           wget https://azerhamid59-lgtm.github.io/manhwa_gerx/manifest.json -O dist/manifest.json
+      # ---------------------------------------------------------
 
       - name: Add Android platform
         run: pnpm exec cap add android
